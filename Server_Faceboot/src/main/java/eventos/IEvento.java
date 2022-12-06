@@ -9,8 +9,15 @@ import principales.ClientManager;
 
 /**
  *
- * @author jegav
+ * @author Jesus Valencia, Antonio del Pardo, Marco Irineo, Giovanni Garrido
  */
 public interface IEvento {
+    
+    /**
+     * Método que ejecuta la petición, obtiene el id de la petición y la realiza
+     * y envia mensaje
+     * @param peticion a realizar
+     * @param cliente que solicitó la operación
+     */
     public void ejecutar(String peticion, ClientManager cliente);
 }

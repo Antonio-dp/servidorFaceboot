@@ -18,15 +18,41 @@ import java.util.List;
 
 /**
  *
- * @author jegav
+ * @author Jesus Valencia, Antonio del Pardo, Marco Irineo, Giovanni Garrido
  */
 public class ClientManager implements Runnable{
+    
+    /**
+     * Variable socket del cliente
+     */
     private Socket clientSocket;
+    
+    /**
+     * Variable para recibir mensajes
+     */
     private BufferedReader in;
+    
+    /**
+     * Variable para enviar mensajes
+     */
     public BufferedWriter out;
+    
+    /**
+     * Variable id
+     */
     private Integer id;
+    
+    /**
+     * Lista de los clientes conectados
+     */
     private static List<ClientManager> clientesConectados;
     
+    /**
+     * Constructor de la clase que inicializa las variables de la clase
+     * @param clientSocket socket del cliente
+     * @param clientesConectados Lista de clientes conectados
+     * @throws IOException Excepción que se puede lanzar
+     */
     public ClientManager(Socket clientSocket, List<ClientManager> clientesConectados) throws IOException {
         this.clientSocket = clientSocket;
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -34,6 +60,10 @@ public class ClientManager implements Runnable{
         this.clientesConectados = clientesConectados;
     }
 
+    /**
+     * Método run que se encarga de recibir los mensajes y los deserializa los mensajes
+     * y se encarga de ejecutar los eventos
+     */
     @Override
     public void run() {
         IJsonToObject conversor = new JsonToObject();
@@ -49,6 +79,10 @@ public class ClientManager implements Runnable{
         }
     }
     
+    /**
+     * Método que se encarga de notificar todos los clientes conectados
+     * @param mensaje para enviar a los clientes
+     */
     public void notificarTodos(String mensaje){
         for(ClientManager cliente: clientesConectados){
                 try{
@@ -62,6 +96,10 @@ public class ClientManager implements Runnable{
         }
     }
     
+    /**
+     * Método que se encarga de enviar un mensaje a un solo cliente
+     * @param mensaje a enviar
+     */
     public void enviarMensaje(String mensaje){
         try{
             out.write(mensaje);
@@ -72,10 +110,16 @@ public class ClientManager implements Runnable{
         }
     }
     
+    /**
+     * Método para eliminar al cliente de la lista de clientes conectados
+     */
     public void eliminarCliente(){
         clientesConectados.remove(this);
     }
     
+    /**
+     * Método para cerrar todo
+     */
     public void cerrarTodo(){
         try{
             clientSocket.close();
@@ -86,10 +130,18 @@ public class ClientManager implements Runnable{
         }
     }
 
+    /**
+     * Método para obtener el id del cliente
+     * @return id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Método para colocar el id de cliente
+     * @param id parametro a colocar
+     */
     public void setId(Integer id) {
         this.id = id;
     }

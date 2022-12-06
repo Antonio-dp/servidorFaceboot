@@ -7,7 +7,6 @@ package eventos;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,10 +14,13 @@ import principales.ClientManager;
 
 /**
  *
- * @author jegav
+ * @author Jesus Valencia, Antonio del Pardo, Marco Irineo, Giovanni Garrido
  */
 public class ManejadorEventos {
     
+    /**
+     * Map con los eventos
+     */
     private static Map<String, IEvento> eventos = Map.ofEntries(
             Map.entry(Eventos.Login, new IniciarSesion()),
             Map.entry(Eventos.registrarUsuario, new RegistrarUsuario()),
@@ -36,10 +38,20 @@ public class ManejadorEventos {
             Map.entry(Eventos.eliminarComentario, new EliminarComentario())
     );
     
+    /**
+     * Método para obtener el evento
+     * @param evento a obtener
+     * @return IEvento
+     */
     public static IEvento get(String evento){
         return eventos.get(evento);
     }
     
+    /**
+     * Método que ejecuta el evento entregado
+     * @param peticion evento a ejecutar
+     * @param cliente cliente que envió el evento
+     */
     public static void ejecutarEvento(String peticion, ClientManager cliente){
         ObjectMapper mapper = new ObjectMapper();
         try {

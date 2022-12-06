@@ -13,19 +13,42 @@ import java.util.List;
 
 /**
  *
- * @author jegav
+ * @author Jesus Valencia, Antonio del Pardo, Marco Irineo, Giovanni Garrido
  */
 public class Server implements Runnable{
 
+    /**
+     * Lista de clientes conectados
+     */
     private static List<ClientManager> clientesConectados = new ArrayList();
+    
+    /**
+     * Variable del puerto
+     */
     private int puerto;
+    
+    /**
+     * Variable del ServerSocket
+     */
     private ServerSocket servidor;
+ 
+    /**
+     * Variable del server
+     */
     private static Server server;
     
+    /**
+     * constructor que inicializa el puerto
+     * @param puerto a guardar
+     */
     private Server(int puerto) {
         this.puerto = puerto;
     }
     
+    /**
+     * Singleton getInstance del Server
+     * @return Server
+     */
     public static Server getInstance(){
         if(server == null){
             server = new Server(9000);
@@ -33,6 +56,10 @@ public class Server implements Runnable{
         return server;
     }
     
+    /**
+     * Metodo Run en el cual se conectan los clientes a la lista y 
+     * se crea un hilo que esta a la espera de algún mensaje que le pueda llegar
+     */
     @Override
     public void run() {
         Socket sc = null;
@@ -51,6 +78,11 @@ public class Server implements Runnable{
         }
     }
     
+    /**
+     * Método que se encarga de notificar a todos los clientes sobre algún evento ocurrido
+     * @param id del que lo envia
+     * @param mensaje que se transmitirá
+     */
     public void notificarTodos(Integer id, String mensaje){
         //System.out.println("Notificando a todos en el server");
         for(ClientManager cliente: clientesConectados){
@@ -70,6 +102,9 @@ public class Server implements Runnable{
         }
     }
 
+    /**
+     * Cierra los server sockets
+     */
     public void cerrarServerSocket(){
         try{
             if(servidor != null){
@@ -80,6 +115,10 @@ public class Server implements Runnable{
         }
     }
     
+    /**
+     * Método main que genera el hilo del servidor
+     * @param args 
+     */
     public static void main(String[] args){
         new Thread(Server.getInstance()).start();
     }

@@ -8,25 +8,39 @@ package eventos;
 import controladores.ControladorUsuario;
 import conversors.IJsonToObject;
 import conversors.JsonToObject;
-import entidades.Usuario;
-import peticiones.Peticion;
 import peticiones.PeticionUsuario;
 import principales.ClientManager;
 
 /**
  *
- * @author jegav
+ * @author Jesus Valencia, Antonio del Pardo, Marco Irineo, Giovanni Garrido
  */
 public class RegistrarUsuario implements IEvento {
     
+    /**
+     * Variable de controlador
+     */
     private ControladorUsuario controladorUsuario;
+    
+    /**
+     * Variable conversor de JSON
+     */
     private IJsonToObject conversor;
 
+    /**
+     * Constructor que inicializa las variables de la clase
+     */
     public RegistrarUsuario() {
         this.conversor = new JsonToObject();
         this.controladorUsuario = new ControladorUsuario();
     }
     
+    /**
+     * Método que ejecuta la petición, obtiene el id de la petición y la realiza
+     * y envia mensaje
+     * @param peticion a realizar
+     * @param cliente que solicitó la operación
+     */
     @Override
     public void ejecutar(String peticion, ClientManager cliente) {
         PeticionUsuario peticionUsuario = conversor.convertirPeticionUsuario(peticion);

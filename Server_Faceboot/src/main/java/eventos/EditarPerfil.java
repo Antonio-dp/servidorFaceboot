@@ -13,18 +13,34 @@ import principales.ClientManager;
 
 /**
  *
- * @author tonyd
+ * @author Jesus Valencia, Antonio del Pardo, Marco Irineo, Giovanni Garrido
  */
 public class EditarPerfil implements IEvento {
 
+    /**
+     * Variable de controlador
+     */
     private ControladorUsuario controladorUsuario;
+    
+    /**
+     * Variable conversor de JSON
+     */
     private IJsonToObject conversor;
 
+    /**
+     * Constructor que inicializa las variables de la clase
+     */
     public EditarPerfil() {
         this.conversor = new JsonToObject();
         this.controladorUsuario = new ControladorUsuario();
     }
 
+    /**
+     * Método que ejecuta la petición, obtiene el id de la petición.
+     * y notifica lo sucedido
+     * @param peticion a realizar
+     * @param cliente que solicitó la operación
+     */
     @Override
     public void ejecutar(String peticion, ClientManager cliente) {
         PeticionUsuario peticionUsuario = conversor.convertirPeticionUsuario(peticion);
